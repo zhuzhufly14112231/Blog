@@ -1,0 +1,45 @@
+{% load static %}
+{% load blog_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="/static/blog.css">
+</head>
+<body>
+    <div id="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <div id="sidebar">
+        <h2> My blog</h2>
+        <p>This is my blog,总共{% total_posts %}篇文章</p>
+        <h3>最新文章</h3>
+        {% show_lastest_posts 3 %}
+
+        <h3>评论最多的文章</h3>
+        {% get_most_comments_posts as most_comment_posts %}
+        <ul>
+            {% for post in most_comment_posts %}
+                <li>
+                    <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                </li>
+                <br>
+            {% endfor %}
+        </ul>
+
+        <h3>明星博主</h3>
+        {% num_count_posts as most_num_posts %}
+        <ul>
+            {% for post in most_num_posts %}
+                <li>
+                    <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                </li>
+                <br>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
